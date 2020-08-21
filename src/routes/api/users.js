@@ -3,34 +3,18 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
+const User = require('../../models/users');
 
-// const createUser = async (req, res) => {
-//     try {
-//         const { email, password, role } = req.body;
-//         const user = new User({ email, password, role });
-//         await user.save();
-//         const token = await user.generateAuthToken();
-//         res.status(200).json({ user, token });
-//     } catch (err) {
-//         logger.error(`createUser failed: ${err.message}`);
-//         res.status(err.code).json({ code: err.code, message: err.message });
-//     }
-// };
 const createUser = async (req, res) => {
     try {
-        const { user } = req.body;
-        let accessToken;
-
-        if (user) {
-            const payload = {user};
-            accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-            
-        }
-        if (accessToken) { return res.status(200).json({ accessToken, user }); }
-        
+        const { email, username, password } = req.body.user;
+        const user = new User({ email, username, password });
+        await user.save();
+        const token = await user.generateAuthToken();
+        res.status(200).json({ user, token });
     } catch (err) {
         console.log(`createUser failed: ${err.message}`);
-        res.status(err.code).json({ code: err.code, message: err.message });
+        res.status(400).json({ code: err.code, message: err.message });
     }
 };
 
@@ -48,7 +32,7 @@ const deleteUser = async (req, res) => {
         await req.user.remove();
         res.status(200).json(req.user);
     } catch (err) {
-        logger.error(`deleteUser failed: ${err.message}`);
+        console.log(`deleteUser failed: ${err.message}`);
         res.status(err.code).json({ code: err.code, message: err.message });
     }
 };
@@ -60,7 +44,7 @@ const loginUser = async (req, res) => {
         const token = await user.generateAuthToken();
         res.status(200).json({ user, token });
     } catch (err) {
-        logger.error(`loginUser failed: ${err.message}`);
+        console.log(`loginUser failed: ${err.message}`);
         res.status(err.code).json(err);
     }
 };
@@ -75,7 +59,7 @@ const editUser = async (req, res) => {
     try {
         updates.forEach(update => (req.user[update] = req.body[update]));
         await req.user.save();
-        logger.info(req.user);
+        console.log(req.user);
         res.status(200).json(req.user);
     } catch (err) {
         res.status(err.code).json({ code: err.code, message: err.message });
@@ -98,7 +82,7 @@ const getUsers = async (req, res) => {
 router.post('/create', createUser);
 router.get('/get', auth, getUser);
 // router.post('/delete', auth, deleteUser);
-// router.post('/login', loginUser);
+router.post('/login', loginUser);
 // router.post('/edit', auth, editUser);
 // router.get('/get', auth, getUsers);
 
