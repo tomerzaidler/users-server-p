@@ -2,6 +2,8 @@ require('dotenv').config();
 const app = require('./server');
 const PORT = process.env.PORT || 3200;
 
+const logger = require('./utils/logger');
+
 //const https = require('https');
 //const fs = require('fs');
 
@@ -12,4 +14,4 @@ const PORT = process.env.PORT || 3200;
     passphrase: ''
 }, app).listen(443);*/
 
-app.listen(PORT, () => console.log(`Server is up and running on port ${PORT}`));
+app.listen(PORT, () => logger.info(`Server is up and running on port ${PORT}`));

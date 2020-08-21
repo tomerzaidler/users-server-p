@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Users = require('../models/users');
+const logger = require('../utils/logger');
 
 async function myDbConnection() {
 
@@ -10,13 +11,13 @@ async function myDbConnection() {
     const uri = process.env.DB_URI;
     let connectionPromise = await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     if (mongoose.connection) {
-        console.log('Connected Successfully to DB')
+        logger.info('Connected Successfully to DB')
         global.connectionPromise = connectionPromise;
     } else { global.connectionPromise = null; 
-            console.log('not connected to DB') }
+            logger.warn('not connected to DB') }
     return connectionPromise;
   } catch (error) {
-      console.log('Error connecting to DB ::', error);
+      createLogger.error('Error connecting to DB ::', error);
   }
 }
 

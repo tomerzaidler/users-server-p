@@ -4,6 +4,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
 const User = require('../../models/users');
+const logger = require('../../utils/logger');
 
 const createUser = async (req, res) => {
     try {
@@ -13,7 +14,7 @@ const createUser = async (req, res) => {
         const token = await user.generateAuthToken();
         res.status(200).json({ user, token });
     } catch (err) {
-        console.log(`createUser failed: ${err.message}`);
+        logger.error(`createUser failed: ${err.message}`);
         res.status(400).json({ code: err.code, message: err.message });
     }
 };
@@ -32,7 +33,7 @@ const deleteUser = async (req, res) => {
         await req.user.remove();
         res.status(200).json(req.user);
     } catch (err) {
-        console.log(`deleteUser failed: ${err.message}`);
+        logger.error(`deleteUser failed: ${err.message}`);
         res.status(err.code).json({ code: err.code, message: err.message });
     }
 };
@@ -44,7 +45,7 @@ const loginUser = async (req, res) => {
         const token = await user.generateAuthToken();
         res.status(200).json({ user, token });
     } catch (err) {
-        console.log(`loginUser failed: ${err.message}`);
+        logger.error(`loginUser failed: ${err.message}`);
         res.status(err.code).json(err);
     }
 };
@@ -59,9 +60,9 @@ const editUser = async (req, res) => {
     try {
         updates.forEach(update => (req.user[update] = req.body[update]));
         await req.user.save();
-        console.log(req.user);
         res.status(200).json(req.user);
     } catch (err) {
+        logger.error(`editUser failed: ${err.message}`);
         res.status(err.code).json({ code: err.code, message: err.message });
     }
 };
