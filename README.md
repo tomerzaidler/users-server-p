@@ -57,7 +57,7 @@ const createUser = async (req, res) => {
 
 - one line command setup
 
-> now install npm and bower packages
+> now install npm
 
 ```shell
 $ npm install
