@@ -120,6 +120,7 @@ router.use('/new-route', require('./api/new-file'));
 Reach out to me at one of the following places!
 
 - Website at <a href="http://www.tomerzaidler.com" target="_blank">`tomerzaidler.com`</a>
+- Email: tomerzaidler@gmail.com
 
 ---
 
