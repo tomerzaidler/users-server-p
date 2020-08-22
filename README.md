@@ -1,6 +1,6 @@
-<a href="http://www.tomerzaidler.com"><img src="https://avatars3.githubusercontent.com/u/50677880?s=460&u=d57cc592bedd144f97deb17f535b6e793f8cb27c&v=4" title="Tomer Zaidler" alt="Tomer Zaidler"></a>
+<!-- <a href="http://www.tomerzaidler.com"><img src="https://avatars3.githubusercontent.com/u/50677880?s=460&u=d57cc592bedd144f97deb17f535b6e793f8cb27c&v=4" title="Tomer Zaidler" alt="Tomer Zaidler"></a>
 
-Tomer Zaidler
+Tomer Zaidler -->
 
 # Users-server
 
@@ -15,6 +15,7 @@ Tomer Zaidler
 > If your `README` has a lot of info, section headers might be nice.
 
 - [Installation](#installation)
+- [API](#api)
 - [Contributing](#contributing)
 - [Team](#team)
 - [Support](#support)
@@ -63,7 +64,22 @@ $ npm install
 ```
 
 ---
+## API
+> base url is http://localhost:3200/api/1
+- /create -> **POST request**
+- /get -> **GET request**
+- /delete -> **DELETE request**
+- /login -> **POST request**
+- /edit -> **PATCH request**
+- /get/all -> **GET request**
 
+> How to add another route?
+- Create another file in the api folder
+- Import new file to the routes.js
+- Add a route with the imported file example:
+```javascript
+router.use('/new-route', require('./api/new-file'));
+```
 ---
 
 ## Contributing
