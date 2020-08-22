@@ -1,7 +1,8 @@
 node_modules/
-
+logs/combined.log
+logs/error.log
+logs/
 .history
 
 .env
 rest.test/
-logs/

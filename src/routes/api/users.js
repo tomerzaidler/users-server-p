@@ -8,7 +8,7 @@ const logger = require('../../utils/logger');
 
 const createUser = async (req, res) => {
     try {
-        const { email, username, password } = req.body.user;
+        const { email, username, password } = req.body;
         const user = new User({ email, username, password });
         await user.save();
         const token = await user.generateAuthToken();
@@ -24,17 +24,17 @@ const getUser = async (req, res) => {
         const user = req.user;
         res.status(200).json({ user });
     } catch (err) {
-        res.status(err.code).json({ code: err.code, message: err.message });
+        res.status(400).json({ code: err.code, message: err.message });
     }
 };
 
 const deleteUser = async (req, res) => {
     try {
         await req.user.remove();
-        res.status(200).json(req.user);
+        res.status(200).json({user});
     } catch (err) {
         logger.error(`deleteUser failed: ${err.message}`);
-        res.status(err.code).json({ code: err.code, message: err.message });
+        res.status(400).json({ code: err.code, message: err.message });
     }
 };
 
@@ -46,24 +46,24 @@ const loginUser = async (req, res) => {
         res.status(200).json({ user, token });
     } catch (err) {
         logger.error(`loginUser failed: ${err.message}`);
-        res.status(err.code).json(err);
+        res.status(400).json(err);
     }
 };
 
 const editUser = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['email', 'password'];
-    const isValidOperation = updates.every(update => allowedUpdates.includes(update));
-    if (!isValidOperation) {
-        throw errors.update;
-    }
+    const allowedUpdates = ['username', 'password'];
     try {
+        const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+        if (!isValidOperation) {
+            throw Error('Error: You can ONLY edit email, username or password');
+        }
         updates.forEach(update => (req.user[update] = req.body[update]));
         await req.user.save();
         res.status(200).json(req.user);
     } catch (err) {
         logger.error(`editUser failed: ${err.message}`);
-        res.status(err.code).json({ code: err.code, message: err.message });
+        res.status(400).json({ code: err.code, message: err.message });
     }
 };
 
@@ -82,9 +82,9 @@ const getUsers = async (req, res) => {
 
 router.post('/create', createUser);
 router.get('/get', auth, getUser);
-// router.post('/delete', auth, deleteUser);
+router.delete('/delete', auth, deleteUser);
 router.post('/login', loginUser);
-// router.post('/edit', auth, editUser);
-// router.get('/get', auth, getUsers);
+router.patch('/edit', auth, editUser);
+router.get('/get/all', getUsers);
 
 module.exports = router;

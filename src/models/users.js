@@ -34,7 +34,7 @@ const usersSchema = new mongoose.Schema(
             }
         }
     },
-    { timestamps: true }
+    { timestamps: true, versionKey: false}
 );
 
 usersSchema.methods.toJSON = function() {
@@ -49,7 +49,8 @@ usersSchema.methods.toJSON = function() {
 
 usersSchema.methods.generateAuthToken = async function() {
     const user = this;
-    const payload = {user: { username: user.username, email: user.email }}
+    // const payload = {user: { username: user.username, email: user.email }};
+    const payload = { user };
     const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: 360000
     });
