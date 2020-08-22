@@ -51,7 +51,7 @@ const createUser = async (req, res) => {
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/tomerzaidler/users-server`
+- Clone this repo to your local machine using `https://github.com/tomerzaidler/users-server-p`
 
 ### Setup
 
@@ -92,7 +92,7 @@ router.use('/new-route', require('./api/new-file'));
     - 🍴 Fork this repo!
 
 - **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/tomerzaidler/users-server.git`
+    - 👯 Clone this repo to your local machine using `https://github.com/tomerzaidler/users-server-p.git`
 
 ### Step 2
 
@@ -100,7 +100,7 @@ router.use('/new-route', require('./api/new-file'));
 
 ### Step 3
 
-- 🔃 Create a new pull request using <a href="https://github.com/joanaz/HireDot2/compare/" target="_blank">`https://github.com/tomerzaidler/users-server/compare`</a>.
+- 🔃 Create a new pull request using <a href="https://github.com/tomerzaidler/users-server-p/compare" target="_blank">`https://github.com/tomerzaidler/users-server-p/compare`</a>.
 
 ---
 
