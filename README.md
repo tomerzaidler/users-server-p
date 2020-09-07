@@ -10,9 +10,8 @@ Tomer Zaidler -->
 
 ---
 
-## Table of Contents (Optional)
+## Table of Contents 
 
-> If your `README` has a lot of info, section headers might be nice.
 
 - [Installation](#installation)
 - [API](#api)
@@ -106,7 +105,6 @@ router.use('/new-route', require('./api/new-file'));
 
 ## Team
 
-> Or Contributors/People
 
 **Tomer Zaidler**
 
