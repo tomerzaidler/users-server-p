@@ -6,7 +6,9 @@ Tomer Zaidler -->
 
 > API server on that listen on port 3200
 
-> user system using mongoDB and authentication
+> Built with express
+
+> Users system using mongoDB for storage and jwt for authentication
 
 ---
 
